@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 removeAllPhotos();
 
                 // Randomly select 8 images
-                const selectedPhotos = getRandomElements(allPhotos, 8);
+                const selectedPhotos = getRandomElements(allPhotos, 9);
 
                 // Show Pictures
                 selectedPhotos.forEach((photoUrl, index) => {
