@@ -9,43 +9,64 @@ document.addEventListener("DOMContentLoaded", function () {
     const menButton = document.getElementById("menButton");
     const womenButton = document.getElementById("womenButton");
 
+    // Event listeners for gender buttons
     allButton.addEventListener("click", () => fetchPhotos('all'));
     menButton.addEventListener("click", () => fetchPhotos('men'));
     womenButton.addEventListener("click", () => fetchPhotos('women'));
 
+    // Start button click event
     startButton.addEventListener("click", () => {
         startButton.disabled = true;
         startButton.textContent = "Processing...";
     
-        simulateEyeTracking(10 * 1000);
+        simulateEyeTrackingResults(10000); // 10000ms equals 10 seconds
     
         setTimeout(() => {
-            const longestGazed = getLongestGazedPhoto();
-            longestGazedPhoto.textContent += longestGazed;
+            const eyeTrackingResults = simulateEyeTrackingResults(10000);
+            displayResults(eyeTrackingResults);
             resultScreen.style.display = "block";
-        }, 10 * 1000);
+        }, 10000); // 10 seconds for displaying results
     });
 
-    function simulateEyeTracking(duration) {
-        // Simuliere eine Ausgabe der betrachteten Bilder in der Konsole
-        console.log("Eye tracking läuft für 10 Sekunden...");
-    
-        // Simulieren des zufällig am längsten betrachteten Bilds nach der Zeit
-        setTimeout(() => {
-            const randomPhoto = `Pic ${Math.floor(Math.random() * 9) + 1}`;
-            console.log(`Längste Blickzeit auf: ${randomPhoto}`);
-        }, duration);
+    // Simulates eye tracking results for given duration
+    function simulateEyeTrackingResults(duration) {
+        console.log("Eye tracking running for 10 seconds...");
+
+        const eyeTrackingResults = [];
+
+        // Simulating random gaze durations for each of the 9 images
+        for (let i = 1; i <= 9; i++) {
+            const randomDuration = Math.floor(Math.random() * duration); // Random duration up to the provided time (in milliseconds)
+            eyeTrackingResults.push({ photo: `Pic ${i}`, duration: randomDuration });
+        }
+
+        // Sort results in descending order based on gaze duration
+        eyeTrackingResults.sort((a, b) => b.duration - a.duration);
+
+        // Output sorted results
+        eyeTrackingResults.forEach(result => {
+            console.log(`Image: ${result.photo} - Gaze duration: ${result.duration}ms`);
+        });
+
+        return eyeTrackingResults;
     }
 
-    function getLongestGazedPhoto() {
-        // Beispiel für die Rückgabe eines zufälligen Bilds als das am längsten betrachtete Bild
-        return `Pic ${Math.floor(Math.random() * 9) + 1}`;
+    // Displays eye tracking results in the frontend
+    function displayResults(eyeTrackingResults) {
+        const resultDisplay = document.getElementById("resultDisplay");
+        resultDisplay.innerHTML = "<h3>Gaze Duration of Images:</h3>";
+        
+        eyeTrackingResults.forEach(result => {
+            const resultElement = document.createElement("p");
+            resultElement.textContent = `${result.photo} - Gaze duration: ${result.duration}ms`;
+            resultDisplay.appendChild(resultElement);
+        });
     }
     
-
     // Initialize to show all photos
     fetchPhotos('all');
 
+    // Fetches photos based on gender
     function fetchPhotos(gender) {
         // Get the list of images in the photos folder
         fetch(`/photos/${gender}`)
@@ -59,12 +80,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Remove existing photos
                 removeAllPhotos();
     
-                const photosToShow = Math.min(9, allPhotos.length); // Begrenzt die Anzahl der Fotos auf maximal 9
+                const photosToShow = Math.min(9, allPhotos.length); // Limit the number of photos to a maximum of 9
     
                 const photosContainer = document.createElement("div");
                 photosContainer.classList.add("photos-container");
     
-                const columnCount = 3; // Anzahl der Spalten
+                const columnCount = 3; // Number of columns
                 const photosPerColumn = Math.ceil(photosToShow / columnCount);
     
                 for (let i = 0; i < columnCount; i++) {
@@ -94,30 +115,13 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
     
-    
-
+    // Displays larger photo on click
     function displayLargePhoto(photoUrl) {
         largePhoto.src = photoUrl;
         largePhotoContainer.style.display = "flex";
     }
 
-    // Get a specified number of random elements
-    function getRandomElements(array, count) {
-        const shuffled = array.slice(0); // Create a copy in case the original array is modified
-        let i = array.length;
-        let temp, index;
-
-        while (i--) {
-            index = Math.floor((i + 1) * Math.random());
-            temp = shuffled[index];
-            shuffled[index] = shuffled[i];
-            shuffled[i] = temp;
-        }
-
-        return shuffled.slice(0, count);
-    }
-
-    // Remove existing photos
+    // Removes existing photos
     function removeAllPhotos() {
         while (gallery.firstChild) {
             gallery.removeChild(gallery.firstChild);
