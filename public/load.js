@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const startButton = document.getElementById("startButton");
+    const resultScreen = document.getElementById("resultScreen");
+    const longestGazedPhoto = document.getElementById("longestGazedPhoto");
     const gallery = document.getElementById("gallery");
     const largePhotoContainer = document.getElementById("largePhotoContainer");
     const largePhoto = document.getElementById("largePhoto");
@@ -9,6 +12,36 @@ document.addEventListener("DOMContentLoaded", function () {
     allButton.addEventListener("click", () => fetchPhotos('all'));
     menButton.addEventListener("click", () => fetchPhotos('men'));
     womenButton.addEventListener("click", () => fetchPhotos('women'));
+
+    startButton.addEventListener("click", () => {
+        startButton.disabled = true;
+        startButton.textContent = "Processing...";
+    
+        simulateEyeTracking(10 * 1000);
+    
+        setTimeout(() => {
+            const longestGazed = getLongestGazedPhoto();
+            longestGazedPhoto.textContent += longestGazed;
+            resultScreen.style.display = "block";
+        }, 10 * 1000);
+    });
+
+    function simulateEyeTracking(duration) {
+        // Simuliere eine Ausgabe der betrachteten Bilder in der Konsole
+        console.log("Eye tracking läuft für 10 Sekunden...");
+    
+        // Simulieren des zufällig am längsten betrachteten Bilds nach der Zeit
+        setTimeout(() => {
+            const randomPhoto = `Pic ${Math.floor(Math.random() * 9) + 1}`;
+            console.log(`Längste Blickzeit auf: ${randomPhoto}`);
+        }, duration);
+    }
+
+    function getLongestGazedPhoto() {
+        // Beispiel für die Rückgabe eines zufälligen Bilds als das am längsten betrachtete Bild
+        return `Pic ${Math.floor(Math.random() * 9) + 1}`;
+    }
+    
 
     // Initialize to show all photos
     fetchPhotos('all');

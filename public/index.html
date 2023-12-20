@@ -14,6 +14,7 @@
     </header>
     
     <div id="buttons">
+        <button id="startButton">Start</button>
         <button id="allButton">All</button>
         <button id="menButton">Men</button>
         <button id="womenButton">Women</button>
@@ -24,6 +25,11 @@
     <div id="largePhotoContainer" class="large-photo-container">
         <button type="button" class="close-button" onclick="closeLargePhoto()">x</button>
         <img id="largePhoto" class="large-photo">
+    </div>
+
+    <div id="resultScreen" style="display: none;">
+        <h2>Ergebnis:</h2>
+        <p id="longestGazedPhoto">Das Bild, auf das Sie am längsten geschaut haben: </p>
     </div>
 
     <script src="load.js"></script>
