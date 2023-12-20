@@ -52,6 +52,18 @@ button {
     transition: transform 0.2s ease-in-out;
 }
 
+.photos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.photo-column {
+    flex: 1 0 calc(33.33% - 10px);
+    display: flex;
+    flex-direction: column;
+}
+
 .photo:hover {
     transform: scale(1.1);
 }

@@ -58,28 +58,43 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(allPhotos => {
                 // Remove existing photos
                 removeAllPhotos();
-
-                // Randomly select 8 images
-                const selectedPhotos = getRandomElements(allPhotos, 9);
-
-                // Show Pictures
-                selectedPhotos.forEach((photoUrl, index) => {
-                    const photoElement = document.createElement("img");
-                    photoElement.src = `photos/${gender}/${photoUrl}`;
-                    photoElement.alt = `Photo ${index + 1}`;
-                    photoElement.classList.add("photo");
-
-                    photoElement.addEventListener("click", () => {
-                        displayLargePhoto(`photos/${gender}/${photoUrl}`);
-                    });
-
-                    gallery.appendChild(photoElement);
-                });
+    
+                const photosToShow = Math.min(9, allPhotos.length); // Begrenzt die Anzahl der Fotos auf maximal 9
+    
+                const photosContainer = document.createElement("div");
+                photosContainer.classList.add("photos-container");
+    
+                const columnCount = 3; // Anzahl der Spalten
+                const photosPerColumn = Math.ceil(photosToShow / columnCount);
+    
+                for (let i = 0; i < columnCount; i++) {
+                    const column = document.createElement("div");
+                    column.classList.add("photo-column");
+                    photosContainer.appendChild(column);
+    
+                    for (let j = i * photosPerColumn; j < (i + 1) * photosPerColumn && j < photosToShow; j++) {
+                        const photoUrl = allPhotos[j];
+                        const photoElement = document.createElement("img");
+                        photoElement.src = `photos/${gender}/${photoUrl}`;
+                        photoElement.alt = `Photo ${j + 1}`;
+                        photoElement.classList.add("photo");
+    
+                        photoElement.addEventListener("click", () => {
+                            displayLargePhoto(`photos/${gender}/${photoUrl}`);
+                        });
+    
+                        column.appendChild(photoElement);
+                    }
+                }
+    
+                gallery.appendChild(photosContainer);
             })
             .catch(error => {
                 console.error(`Error fetching ${gender} photo list:`, error.message);
             });
     }
+    
+    
 
     function displayLargePhoto(photoUrl) {
         largePhoto.src = photoUrl;
