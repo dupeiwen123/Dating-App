@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const allButton = document.getElementById("allButton");
     const menButton = document.getElementById("menButton");
     const womenButton = document.getElementById("womenButton");
+    const shortlistButton = document.getElementById("shortlistButton");
 
     // Event listeners for gender buttons
     allButton.addEventListener("click", () => fetchPhotos('all'));
@@ -27,6 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
             displayResults(eyeTrackingResults);
             resultScreen.style.display = "block";
         }, duration);
+    });
+
+    // Event listener for the Shortlist button
+    shortlistButton.addEventListener("click", () => {
+        window.location.href = "shortlist.html"; // Redirect to the Shortlist page
     });
 
     // Simulates eye tracking results for given duration
