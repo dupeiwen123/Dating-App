@@ -1,47 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://webgazer.cs.brown.edu/webgazer.js?" defer></script>
-    <script src="script.js" defer></script>
-    <title>Match Gallery</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <title>Emotion Tinder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f8f8f8;
+    }
+
+    .start-screen {
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 3em;
+      color: #ff6b6b;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      font-size: 1.5em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .centered-button {
+      display: flex;
+      justify-content: center;
+    }
+
+    .centered-button button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .centered-button button:hover {
+      background-color: #ff8c8c;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Match Gallery</h1>
-    </header>
-    
-    <div id="buttons">
-        <button id="startButton">Start</button>
-        <button id="allButton">All</button>
-        <button id="menButton">Men</button>
-        <button id="womenButton">Women</button>
-        <button id="refreshButton">Refresh</button>
-        <button id="shortlistButton">Shortlist</button>
+  <div class="start-screen">
+    <div class="logo">Emotion Tinder</div>
+    <div class="description">Finden Sie Ihre Emotionen</div>
+    <div class="centered-button">
+      <button onclick="window.location.href = 'calibrationScreen.html';">Zur Calibration</button>
     </div>
-    
-
-    <div id="gallery"></div>
-
-    <div id="shortlistGallery"></div>
-
-    <div id="largePhotoContainer" class="large-photo-container">
-        <button type="button" class="close-button" onclick="closeLargePhoto()">x</button>
-        <img id="largePhoto" class="large-photo">
-    </div>
-
-    <div id="resultScreen" style="display: none;">
-        <h2>Results:</h2>
-        <div id="resultDisplay"></div>
-    </div>
-
-    <script src="load.js"></script>
-    <script>
-        function closeLargePhoto() {
-            document.getElementById("largePhotoContainer").style.display = "none";
-        }
-    </script>
+  </div>
 </body>
 </html>

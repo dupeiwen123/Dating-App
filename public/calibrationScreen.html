@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://webgazer.cs.brown.edu/webgazer.js?" defer></script>
+  <script src="js/script.js" defer></script>
+  <title>Kalibrierungsscreen</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .point {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #333;
+      position: absolute;
+      cursor: pointer;
+    }
+
+    .point1 {
+      top: 10px;
+      left: 10px;
+    }
+
+    .point2 {
+      top: 10px;
+      right: 10px;
+    }
+
+    .point3 {
+      bottom: 10px;
+      left: 10px;
+    }
+
+    .point4 {
+      bottom: 10px;
+      right: 10px;
+    }
+
+    .point5 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #calibrationText {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <div class="point point1" onclick="showNextPoint(2)"></div>
+  <div class="point point2" style="display: none;" onclick="showNextPoint(3)"></div>
+  <div class="point point3" style="display: none;" onclick="showNextPoint(4)"></div>
+  <div class="point point4" style="display: none;" onclick="showNextPoint(5)"></div>
+  <div class="point point5" style="display: none;" onclick="completeCalibration()"></div>
+  <div id="calibrationText">Kalibrierung abgeschlossen</div>
+
+  <script>
+    let currentPoint = 1;
+
+    function showNextPoint(nextPoint) {
+      const current = document.querySelector('.point' + currentPoint);
+      const next = document.querySelector('.point' + nextPoint);
+
+      if (current) {
+        current.style.display = 'none';
+      }
+
+      if (next) {
+        next.style.display = 'block';
+      }
+
+      currentPoint = nextPoint;
+    }
+
+    function completeCalibration() {
+      document.getElementById('calibrationText').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

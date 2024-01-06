@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://webgazer.cs.brown.edu/webgazer.js?" defer></script>
+    <script src="js/script.js" defer></script>
+    <title>Match Gallery</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Match Gallery</h1>
+    </header>
+    
+    <div id="buttons">
+        <button id="startButton">Start</button>
+        <button id="allButton">All</button>
+        <button id="menButton">Men</button>
+        <button id="womenButton">Women</button>
+        <button id="refreshButton">Refresh</button>
+        <button id="shortlistButton">Shortlist</button>
+    </div>
+    
+
+    <div id="gallery"></div>
+
+    <div id="shortlistGallery"></div>
+
+    <div id="largePhotoContainer" class="large-photo-container">
+        <button type="button" class="close-button" onclick="closeLargePhoto()">x</button>
+        <img id="largePhoto" class="large-photo">
+    </div>
+
+    <div id="resultScreen" style="display: none;">
+        <h2>Results:</h2>
+        <div id="resultDisplay"></div>
+    </div>
+
+    <script src="load.js"></script>
+    <script>
+        function closeLargePhoto() {
+            document.getElementById("largePhotoContainer").style.display = "none";
+        }
+    </script>
+</body>
+</html>
