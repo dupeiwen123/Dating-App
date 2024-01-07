@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Emotion Tinder</title>
+  <!-- Bootstrap CDN einbinden -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -14,49 +16,159 @@
       background-color: #f8f8f8;
     }
 
-    .start-screen {
-      text-align: center;
+    .carousel-item {
+      text-align: left;
+      padding: 20px;
     }
 
-    .logo {
-      font-size: 3em;
+    .carousel-title {
+      font-size: 2em;
       color: #ff6b6b;
+      font-weight: bold;
       margin-bottom: 20px;
     }
 
-    .description {
-      font-size: 1.5em;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    .centered-button {
-      display: flex;
-      justify-content: center;
-    }
-
-    .centered-button button {
-      padding: 10px 20px;
+    .carousel-content {
       font-size: 1.2em;
-      background-color: #ff6b6b;
-      color: white;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* Anpassungen für die Buttons */
+    .carousel-control-prev, .carousel-control-next {
+      background-color: transparent;
       border: none;
-      border-radius: 5px;
+      width: 50px;
+      height: 100%;
+      top: 0;
+      transform: translateY(0%);
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+
+    .carousel-control-prev:hover, .carousel-control-next:hover {
+      opacity: 1;
+    }
+
+    .carousel-control-prev-icon, .carousel-control-next-icon {
+      color: #ff6b6b;
+      font-size: 2em;
+    }
+
+    .carousel-control-prev {
+      left: -50px;
+    }
+
+    .carousel-control-next {
+      right: -50px;
+    }
+
+    .carousel-control-prev:not(:disabled), .carousel-control-next:not(:disabled) {
+      opacity: 1;
       cursor: pointer;
     }
 
-    .centered-button button:hover {
+    .carousel-control-prev[aria-disabled="true"], .carousel-control-next[aria-disabled="true"] {
+      display: none;
+    }
+
+    /* Anpassungen für den Kalibrierungsbutton */
+    .calibration-button {
+      background-color: #ff6b6b;
+      border: none;
+      border-radius: 5px;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .calibration-button:hover {
+      background-color: #ff8c8c;
+    }
+    
+    /* Anpassungen für die Pfeile */
+    .carousel-control-prev-icon, .carousel-control-next-icon {
+      background-color: #ff6b6b;
+    }
+
+    .carousel-control-prev:hover .carousel-control-prev-icon, 
+    .carousel-control-next:hover .carousel-control-next-icon {
       background-color: #ff8c8c;
     }
   </style>
 </head>
 <body>
-  <div class="start-screen">
-    <div class="logo">Emotion Tinder</div>
-    <div class="description">Finden Sie Ihre Emotionen</div>
-    <div class="centered-button">
-      <button onclick="window.location.href = 'calibrationScreen.html';">Zur Calibration</button>
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-8">
+        <div id="infoCarousel" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-index="0" data-total-items="7">
+              <h2 class="carousel-title">Welcome to Emotion Tinder!</h2>
+              <div class="carousel-content">
+                <p>Our application offers you an innovative dating experience built on state-of-the-art Eyetracking Technology.</p>
+              </div>
+            </div>
+            <!-- Weitere Carousel-Elemente hier einfügen -->
+            <!-- ... -->
+            <div class="carousel-item" data-index="1" data-total-items="7">
+              <h2 class="carousel-title">Your journey begins</h2>
+              <div class="carousel-content">
+                <p>With the initial stage where a selection of dating profile pictures is presented to you. With each round, we display a set of nine images.</p>
+              </div>
+            </div>
+            <div class="carousel-item" data-index="2" data-total-items="7">
+              <h2 class="carousel-title">View and swipe</h2>
+              <div class="carousel-content">
+                <p>Your task is simply to view these pictures. Utilizing our Eyetracking Technology, we track the images that capture your attention the most.</p>
+              </div>
+            </div>
+            <div class="carousel-item" data-index="3" data-total-items="7">
+              <h2 class="carousel-title">Swipe left or right</h2>
+              <div class="carousel-content">
+                <p>In the second stage, we showcase the most intriguing pictures again. Here, it's up to you to swipe left if you like a profile or swipe right if it doesn’t match your preferences.</p>
+              </div>
+            </div>
+            <div class="carousel-item" data-index="4" data-total-items="7">
+              <h2 class="carousel-title">Calibration is crucial</h2>
+              <div class="carousel-content">
+                <p>To ensure the effectiveness of the Eyetracking, we kindly ask you to sit in a well-lit room and position your face within the designated rectangle on your camera.</p>
+              </div>
+            </div>
+            <div class="carousel-item" data-index="5" data-total-items="7">
+              <h2 class="carousel-title">Fine-tuning for accuracy</h2>
+              <div class="carousel-content">
+                <p>We also request you to perform the calibration initially to fine-tune the Eyetracking Technology for optimal performance.</p>
+              </div>
+            </div>
+            <div class="carousel-item" data-index="6" data-total-items="7">
+              <h2 class="carousel-title">Begin your journey</h2>
+              <div class="carousel-content">
+                <p>Discover exciting profiles tailored to your individual preferences. Welcome to Emotion Tinder, where your interests take center stage.</p>
+                <div class="text-center">
+                  <button onclick="window.location.href = 'calibrationScreen.html';" class="calibration-button mt-3">Start Calibration</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#infoCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#infoCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Bootstrap JavaScript- und jQuery-CDNs einbinden -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

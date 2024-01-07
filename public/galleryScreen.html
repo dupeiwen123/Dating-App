@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://webgazer.cs.brown.edu/webgazer.js?" defer></script>
-    <script src="js/script.js" defer></script>
+    <script src="js/load.js" defer></script>
     <title>Match Gallery</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Stil für das Popup */
+        #genderDialog {
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -21,7 +31,14 @@
         <button id="refreshButton">Refresh</button>
         <button id="shortlistButton">Shortlist</button>
     </div>
-    
+
+    <!-- Das Popup -->
+    <dialog id="genderDialog">
+        <h2>Choose Preference</h2>
+        <p>Are you interested in:</p>
+        <button onclick="selectGender('men')">Men</button>
+        <button onclick="selectGender('women')">Women</button>
+    </dialog>
 
     <div id="gallery"></div>
 
@@ -36,12 +53,5 @@
         <h2>Results:</h2>
         <div id="resultDisplay"></div>
     </div>
-
-    <script src="load.js"></script>
-    <script>
-        function closeLargePhoto() {
-            document.getElementById("largePhotoContainer").style.display = "none";
-        }
-    </script>
 </body>
 </html>

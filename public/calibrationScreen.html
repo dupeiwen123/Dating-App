@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://webgazer.cs.brown.edu/webgazer.js?" defer></script>
   <script src="js/script.js" defer></script>
-  <title>Kalibrierungsscreen</title>
+  <title>Calibration Screen</title>
   <style>
     body {
       margin: 0;
@@ -27,7 +27,7 @@
 
     .point1 {
       top: 10px;
-      left: 10px;
+      left: 400px;
     }
 
     .point2 {
@@ -69,6 +69,10 @@
   <div class="point point5" style="display: none;" onclick="completeCalibration()"></div>
   <div id="calibrationText">Kalibrierung abgeschlossen</div>
 
+  <div id="galleryButton" class="centered-button">
+    <button onclick="window.location.href = 'galleryScreen.html';">Zur gallerie diggi</button>
+  </div>
+
   <script>
     let currentPoint = 1;
 
@@ -89,6 +93,7 @@
 
     function completeCalibration() {
       document.getElementById('calibrationText').style.display = 'block';
+      document.getElementById('galleryButton').style.display = 'block';
     }
   </script>
 </body>
