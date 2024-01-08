@@ -1,186 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+This file provides the additional features:
+  * Structured 9-point calibration system
+  * Accuracy measure of predictions based on calibration process
+  * Video feedback regarding face positioning
+  * Improved eye predictions visible to the user
+-->
+<html>
+    <head>
+        <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+        <TITLE>WebGazer Demo</TITLE>
+        <link rel="stylesheet" type="text/css" href="./css/calibrationStyles.css">
+        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <script src="https://webgazer.cs.brown.edu/webgazer.js?" defer></script>
+        <script src="js/script.js" defer></script>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://webgazer.cs.brown.edu/webgazer.js?" defer></script>
-  <script src="js/script.js" defer></script>
-  <title>Calibration Screen</title>
-  <style>
-    /* Stil bleibt unverändert */
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-    }
+    </head>
+    <body LANG="en-US" LINK="#0000ff" DIR="LTR">
+      <canvas id="plotting_canvas" width="500" height="500" style="cursor:crosshair;"></canvas>
 
-    .point {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background-color: red; /* Alle Punkte sind anfangs rot */
-      position: absolute;
-      cursor: pointer;
-    }
+        <script src="./node_modules/sweetalert/dist/sweetalert.min.js"></script>
 
-    /* Restliche Klassen bleiben unverändert */
-    /* ... */
-    .point1 {
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+        <script src="./js/main.js"></script>
+        <script src="./js/calibration.js"></script>
+        <script src="./js/precision_calculation.js"></script>
+        <script src="./js/precision_store_points.js"></script>
 
-    .point2 {
-      top: 10px;
-      right: 10px;
-    }
+        <nav id="webgazerNavbar" class="navbar navbar-expand-lg navbar-default navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <!-- The hamburger menu button -->
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                <span class="navbar-toggler-icon">Menu</span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                <!-- Accuracy -->
+                <li id="Accuracy"><a>Not yet Calibrated</a></li>
+                <li><a onclick="Restart()" href="#">Recalibrate</a></li>
+                <li><a onclick="redirectToGallery()" href="#">Go to Gallery</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a class="helpBtn" onclick="helpModalShow()" href="#"><span class="glyphicon glyphicon-cog"></span> Help</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Calibration points -->
+        <div class="calibrationDiv">
+            <input type="button" class="Calibration" id="Pt1"></input>
+            <input type="button" class="Calibration" id="Pt2"></input>
+            <input type="button" class="Calibration" id="Pt3"></input>
+            <input type="button" class="Calibration" id="Pt4"></input>
+            <input type="button" class="Calibration" id="Pt5"></input>
+            <input type="button" class="Calibration" id="Pt6"></input>
+            <input type="button" class="Calibration" id="Pt7"></input>
+            <input type="button" class="Calibration" id="Pt8"></input>
+            <input type="button" class="Calibration" id="Pt9"></input>
+        </div>
 
-    .point3 {
-      bottom: 10px;
-      left: 10px;
-    }
+        <!-- Modal -->
+        <div id="helpModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
 
-    .point4 {
-      bottom: 10px;
-      right: 10px;
-    }
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-body">
+                <img src="photos/calibration_help.png" width="100%" height="100%" alt="webgazer demo instructions"></img>
+              </div>
+              <div class="modal-footer">
+                <button id="closeBtn" type="button" class="btn btn-default" data-bs-dismiss="modal">Close & load saved model </button>
+                <button type="button" id='start_calibration' class="btn btn-primary" data-bs-dismiss="modal" onclick="Restart()">Calibrate</button>
+              </div>
+            </div>
 
-    .point5 {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+          </div>
+        </div>
 
-    .point6 {
-      top: 10px;
-      left: 50%;
-      transform: translate(-50%);
-    }
+        <!-- Latest compiled JavaScript -->
+        <script src="./js/resize_canvas.js"></script>
+        <script src="http://localhost:3000/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-    .point7 {
-      top: 50%;
-      left: 10px;
-    }
-
-    .point8 {
-      top: 50%;
-      right: 10px;
-    }
-
-    .point9 {
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .point10 {
-      top: 10px;
-      left: 340px;
-    }
-
-    /* Stil für gelbe Punkte */
-    .yellow {
-      background-color: yellow !important;
-    }
-
-    /* Stil für das Popup */
-    #popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      padding: 20px;
-      border: 2px solid #333;
-      border-radius: 5px;
-      text-align: center;
-    }
-
-    #popup button {
-      padding: 10px 20px;
-      font-size: 1em;
-      background-color: #333;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #popup button:hover {
-      background-color: #555;
-    }
-  </style>
-</head>
-
-<body>
-  <!-- Alle div-Elemente für die Kalibrierungspunkte -->
-  <!-- ... -->
-  <div class="point point1" onclick="changePointColor(this, 1)"></div>
-  <div class="point point2" onclick="changePointColor(this, 2)"></div>
-  <div class="point point3" onclick="changePointColor(this, 3)"></div>
-  <div class="point point4" onclick="changePointColor(this, 4)"></div>
-  <div class="point point5" onclick="changePointColor(this, 5)"></div>
-  <div class="point point6" onclick="changePointColor(this, 6)"></div>
-  <div class="point point7" onclick="changePointColor(this, 7)"></div>
-  <div class="point point8" onclick="changePointColor(this, 8)"></div>
-  <div class="point point9" onclick="changePointColor(this, 9)"></div>
-  <div class="point point10" onclick="changePointColor(this, 10)"></div>
-
-
-  <!-- Popup für "Kalibrierung abgeschlossen" und "Zur Galerie" Button -->
-  <div id="popup">
-    <div id="calibrationText" style="display: none;">Kalibrierung abgeschlossen</div>
-    <div id="galleryButton" style="display: none;">
-      <button onclick="redirectToGallery()">Zur Galerie</button>
-    </div>
-  </div>
-
-  <script>
-    const totalPoints = 10; // Gesamtzahl der Punkte
-    const clicksRequired = 5; // Anzahl der erforderlichen Klicks pro Punkt
-    let clickedPoints = {};
-
-    function changePointColor(element, pointNumber) {
-      const pointClass = 'point' + pointNumber;
-      clickedPoints[pointClass] = clickedPoints[pointClass] ? clickedPoints[pointClass] + 1 : 1;
-
-      if (clickedPoints[pointClass] >= clicksRequired) {
-        element.classList.add('yellow');
-      }
-
-      checkCalibrationCompletion();
-    }
-
-    function checkCalibrationCompletion() {
-      const yellowPointElements = document.querySelectorAll('.point');
-      let allYellow = true;
-
-      yellowPointElements.forEach(point => {
-        const pointClass = point.classList[1]; // Get the class of the point
-        const clickCount = clickedPoints[pointClass] || 0; // Get click count for the point
-
-        if (clickCount < clicksRequired) {
-          allYellow = false;
-        }
-      });
-
-      if (allYellow) {
-        document.getElementById('calibrationText').style.display = 'block';
-        document.getElementById('galleryButton').style.display = 'block';
-        document.getElementById('popup').style.display = 'block';
-      }
-    }
-
-    function redirectToGallery() {
-      window.location.href = 'galleryScreen.html';
-    }
-  </script>
-</body>
-
+    </body>
 </html>

@@ -1,3 +1,4 @@
+// important to be true
 window.saveDataAcrossSessions = true
 
 const LEFT_SIDE = window.innerWidth / 3
