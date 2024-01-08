@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +8,31 @@
   <script src="js/script.js" defer></script>
   <title>Calibration Screen</title>
   <style>
+    /* Stil bleibt unverändert */
     body {
       margin: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
+      font-family: Arial, sans-serif;
     }
 
     .point {
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background-color: #333;
+      background-color: red; /* Alle Punkte sind anfangs rot */
       position: absolute;
       cursor: pointer;
     }
 
+    /* Restliche Klassen bleiben unverändert */
+    /* ... */
     .point1 {
       top: 10px;
-      left: 400px;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .point2 {
@@ -51,50 +56,131 @@
       transform: translate(-50%, -50%);
     }
 
-    #calibrationText {
+    .point6 {
+      top: 10px;
+      left: 50%;
+      transform: translate(-50%);
+    }
+
+    .point7 {
+      top: 50%;
+      left: 10px;
+    }
+
+    .point8 {
+      top: 50%;
+      right: 10px;
+    }
+
+    .point9 {
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .point10 {
+      top: 10px;
+      left: 340px;
+    }
+
+    /* Stil für gelbe Punkte */
+    .yellow {
+      background-color: yellow !important;
+    }
+
+    /* Stil für das Popup */
+    #popup {
       display: none;
-      position: absolute;
+      position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 1.5em;
+      background-color: white;
+      padding: 20px;
+      border: 2px solid #333;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    #popup button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #popup button:hover {
+      background-color: #555;
     }
   </style>
 </head>
-<body>
-  <div class="point point1" onclick="showNextPoint(2)"></div>
-  <div class="point point2" style="display: none;" onclick="showNextPoint(3)"></div>
-  <div class="point point3" style="display: none;" onclick="showNextPoint(4)"></div>
-  <div class="point point4" style="display: none;" onclick="showNextPoint(5)"></div>
-  <div class="point point5" style="display: none;" onclick="completeCalibration()"></div>
-  <div id="calibrationText">Kalibrierung abgeschlossen</div>
 
-  <div id="galleryButton" class="centered-button">
-    <button onclick="window.location.href = 'galleryScreen.html';">Zur gallerie diggi</button>
+<body>
+  <!-- Alle div-Elemente für die Kalibrierungspunkte -->
+  <!-- ... -->
+  <div class="point point1" onclick="changePointColor(this, 1)"></div>
+  <div class="point point2" onclick="changePointColor(this, 2)"></div>
+  <div class="point point3" onclick="changePointColor(this, 3)"></div>
+  <div class="point point4" onclick="changePointColor(this, 4)"></div>
+  <div class="point point5" onclick="changePointColor(this, 5)"></div>
+  <div class="point point6" onclick="changePointColor(this, 6)"></div>
+  <div class="point point7" onclick="changePointColor(this, 7)"></div>
+  <div class="point point8" onclick="changePointColor(this, 8)"></div>
+  <div class="point point9" onclick="changePointColor(this, 9)"></div>
+  <div class="point point10" onclick="changePointColor(this, 10)"></div>
+
+
+  <!-- Popup für "Kalibrierung abgeschlossen" und "Zur Galerie" Button -->
+  <div id="popup">
+    <div id="calibrationText" style="display: none;">Kalibrierung abgeschlossen</div>
+    <div id="galleryButton" style="display: none;">
+      <button onclick="redirectToGallery()">Zur Galerie</button>
+    </div>
   </div>
 
   <script>
-    let currentPoint = 1;
+    const totalPoints = 10; // Gesamtzahl der Punkte
+    const clicksRequired = 5; // Anzahl der erforderlichen Klicks pro Punkt
+    let clickedPoints = {};
 
-    function showNextPoint(nextPoint) {
-      const current = document.querySelector('.point' + currentPoint);
-      const next = document.querySelector('.point' + nextPoint);
+    function changePointColor(element, pointNumber) {
+      const pointClass = 'point' + pointNumber;
+      clickedPoints[pointClass] = clickedPoints[pointClass] ? clickedPoints[pointClass] + 1 : 1;
 
-      if (current) {
-        current.style.display = 'none';
+      if (clickedPoints[pointClass] >= clicksRequired) {
+        element.classList.add('yellow');
       }
 
-      if (next) {
-        next.style.display = 'block';
-      }
-
-      currentPoint = nextPoint;
+      checkCalibrationCompletion();
     }
 
-    function completeCalibration() {
-      document.getElementById('calibrationText').style.display = 'block';
-      document.getElementById('galleryButton').style.display = 'block';
+    function checkCalibrationCompletion() {
+      const yellowPointElements = document.querySelectorAll('.point');
+      let allYellow = true;
+
+      yellowPointElements.forEach(point => {
+        const pointClass = point.classList[1]; // Get the class of the point
+        const clickCount = clickedPoints[pointClass] || 0; // Get click count for the point
+
+        if (clickCount < clicksRequired) {
+          allYellow = false;
+        }
+      });
+
+      if (allYellow) {
+        document.getElementById('calibrationText').style.display = 'block';
+        document.getElementById('galleryButton').style.display = 'block';
+        document.getElementById('popup').style.display = 'block';
+      }
+    }
+
+    function redirectToGallery() {
+      window.location.href = 'galleryScreen.html';
     }
   </script>
 </body>
+
 </html>

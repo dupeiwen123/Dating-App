@@ -135,12 +135,6 @@ function fetchPhotos(gender) {
         });
 }
 
-// Displays larger photo on click
-function displayLargePhoto(photoUrl) {
-    largePhoto.src = photoUrl;
-    largePhotoContainer.style.display = "flex";
-}
-
 // Removes existing photos
 function removeAllPhotos() {
     while (gallery.firstChild) {
@@ -154,10 +148,8 @@ const genderDialog = document.getElementById('genderDialog');
 function openGenderDialog() {
     if (!genderDialog.showModal) {
         alert('Das <dialog> Element wird von diesem Browser nicht unterstützt. Verwende stattdessen eine andere Methode für Popups.');
-            console.log("penis nein")
         return;
     }
-    console.log("penis ja")
     genderDialog.showModal();
 
 }
@@ -173,7 +165,6 @@ function closeLargePhoto() {
 
 // Öffne das Popup, wenn die Seite geladen ist
 window.onload = function() {
-    console.log("penis")
     openGenderDialog();
 };
 
@@ -202,25 +193,25 @@ webgazer.setGazeListener((data, timestamp) => {
         if (data.y < TOP_SIDE) {
             currentPic = currentImageNamesOfCells[0] // pic1
         } else if (data.y >= BOTTOM_SIDE) {
-            currentPic = 'Pic 7'// todo add aaray
+            currentPic = currentImageNamesOfCells[6] // pic7
         } else {
-            currentPic = 'Pic 4'
+            currentPic = currentImageNamesOfCells[3] // pic4
         }
     } else if (data.x >= RIGHT_SIDE) {
         if (data.y < TOP_SIDE) {
-            currentPic = 'Pic 3'
+            currentPic = currentImageNamesOfCells[2] // pic3
         } else if (data.y >= BOTTOM_SIDE) {
-            currentPic = 'Pic 9'
+            currentPic = currentImageNamesOfCells[8] // pic9
         } else {
-            currentPic = 'Pic 6'
+            currentPic = currentImageNamesOfCells[5] // pic6
         }
     } else {
         if (data.y < TOP_SIDE) {
-            currentPic = 'Pic 2'
+            currentPic = currentImageNamesOfCells[1] // pic2
         } else if (data.y >= BOTTOM_SIDE) {
-            currentPic = 'Pic 5'
+            currentPic = currentImageNamesOfCells[4] // pic5
         } else {
-            currentPic = 'Pic 8'
+            currentPic = currentImageNamesOfCells[8] // pic7
         }
     }
 
