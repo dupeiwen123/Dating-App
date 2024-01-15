@@ -20,7 +20,7 @@ allButton.addEventListener("click", () => fetchPhotos('all'));
 menButton.addEventListener("click", () => fetchPhotos('men'));
 womenButton.addEventListener("click", () => fetchPhotos('women'));
 
-// Start button click event
+// Start button click event TODO
 startButton.addEventListener("click", () => {
     startButton.disabled = true;
     startButton.textContent = "Processing...";
@@ -42,41 +42,12 @@ shortlistButton.addEventListener("click", () => {
 
 // Simulates eye tracking results for given duration
 function simulateEyeTrackingResults(duration) {
-    console.log(`Eye tracking running for ${duration / 1000} seconds...`);
-
-    const eyeTrackingResults = [];
-    let totalDuration = 0;
-
-    // Simulating random gaze durations for each of the 9 images to match the total duration
-    for (let i = 1; i <= 9; i++) {
-        const maxDuration = duration - totalDuration - (9 - i); // Ensure the total is accurate and distribute the time among images
-        const randomDuration = Math.floor(Math.random() * maxDuration); // Random duration up to the remaining time
-        eyeTrackingResults.push({ photo: `Pic ${i}`, duration: randomDuration });
-        totalDuration += randomDuration;
-    }
-
-    // Calculate the remaining duration for the last image to match the total duration
-    eyeTrackingResults[8].duration = duration - totalDuration;
-
-    // Output results
-    eyeTrackingResults.forEach(result => {
-        console.log(`Image: ${result.photo} - Gaze duration: ${result.duration}ms`);
-    });
-
     return eyeTrackingResults;
 }
 
 // Displays eye tracking results in the frontend
-function displayResults(eyeTrackingResults) {
-    const resultDisplay = document.getElementById("resultDisplay");
-    resultDisplay.innerHTML = "<h3>Gaze Duration of Images:</h3>";
-
-    eyeTrackingResults.forEach(result => {
-        const resultElement = document.createElement("p");
-        resultElement.textContent = `${result.photo} - Gaze duration: ${result.duration}ms`;
-        resultDisplay.appendChild(resultElement);
-    });
-}
+/* function displayResults(eyeTrackingResults) {
+} */
 
 // Initialize to show all photos
 // fetchPhotos('all');
@@ -156,7 +127,7 @@ function openGenderDialog() {
 
 function selectGender(gender) {
     genderDialog.close();
-    fetchPhotos(gender); // Funktion, um Fotos basierend auf dem ausgewählten Geschlecht zu laden
+    fetchPhotos(gender); // Fotos basierend auf Geschlecht
 }
 
 function closeLargePhoto() {
@@ -222,7 +193,9 @@ webgazer.setGazeListener((data, timestamp) => {
     } else {
         picCountMap.set(currentPic, 1)
     }
-    
+
+    // damit man von shortlist.js darauf zugreifen kann
+    localStorage["name"] = JSON.stringify(Array.from(picCountMap.entries()));
 
     console.log(`${currentPic} - Count: ${picCountMap.get(currentPic)}`)
 })

@@ -1,61 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
     const shortlistGallery = document.getElementById("shortlistGallery");
 
-    // Fetch three random images from the 'all' subfolder in the 'photos' folder
-    fetchRandomImages();
+    // Die picCountMap aus load.js verwenden
+    const picsValueMap = new Map(JSON.parse(localStorage["name"]))
 
-    function fetchRandomImages() {
-        fetch('/photos/all')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch random images');
-                }
-                return response.json();
-            })
-            .then(randomImages => {
-                const limitedImages = getRandomElements(randomImages, 3); // Get only 3 random images
-                displayRandomImages(limitedImages);
-            })
-            .catch(error => {
-                console.error('Error fetching random images:', error.message);
-            });
+    console.log(picsValueMap)
+
+    // test ob defined ist
+    if (!picsValueMap) {
+        console.error('picCountMap is not defined. Make sure it is set in load.js.');
+        return;
     }
 
-    function displayRandomImages(images) {
-        images.forEach(imageUrl => {
-            const imageElement = document.createElement("img");
-            imageElement.src = `photos/all/${imageUrl}`;
-            imageElement.alt = "Shortlisted Photo";
-            imageElement.classList.add("shortlist-photo"); // Adding class for the defined size in styles.css
+    // Umwandlung der Map in ein Array von Schlüssel-Wert-Paaren
+    const picCountArray = Array.from(picsValueMap.entries());
 
-            imageElement.addEventListener("click", () => {
-                displayLargePhoto(`photos/all/${imageUrl}`);
-            });
+    // Sortieren des Arrays absteigend nach den Werten (Count)
+    picCountArray.sort((a, b) => b[1] - a[1]);
 
-            shortlistGallery.appendChild(imageElement);
-        });
-    }
+    // Die 3 Bilder mit den höchsten currentCount-Werten erhalten
+    const topThreeImages = picCountArray.slice(0, 3).map(entry => entry[0]);
+    console.log(topThreeImages);
 
-    function displayLargePhoto(photoUrl) {
-        const largePhoto = document.getElementById("largePhoto");
-        const largePhotoContainer = document.getElementById("largePhotoContainer");
-
-        largePhoto.src = photoUrl;
-        largePhotoContainer.style.display = "flex";
-    }
+    displayTopImages(topThreeImages);
 });
 
-function getRandomElements(array, count) {
-    const shuffled = array.slice(0); // Create a copy in case the original array is modified
-    let i = array.length;
-    let temp, index;
+function displayTopImages(images) {
+    images.forEach(imageName => {
+        const imageElement = document.createElement("img");
+        imageElement.src = `photos/all/${imageName}`;
+        imageElement.alt = "Shortlisted Photo";
+        imageElement.classList.add("shortlist-photo"); // Klasse für die definierte Größe in styles.css
 
-    while (i--) {
-        index = Math.floor((i + 1) * Math.random());
-        temp = shuffled[index];
-        shuffled[index] = shuffled[i];
-        shuffled[i] = temp;
-    }
+        imageElement.addEventListener("click", () => {
+            displayLargePhoto(`photos/all/${imageName}`);
+        });
 
-    return shuffled.slice(0, count);
+        shortlistGallery.appendChild(imageElement);
+    });
+}
+
+function displayLargePhoto(photoUrl) {
+    const largePhoto = document.getElementById("largePhoto");
+    const largePhotoContainer = document.getElementById("largePhotoContainer");
+
+    largePhoto.src = photoUrl;
+    largePhotoContainer.style.display = "flex";
 }
