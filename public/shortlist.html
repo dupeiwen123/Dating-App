@@ -3,14 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shortlist</title>
+    <title>Your Favorites</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script defer src="js/shortlist.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
 
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #shortlistGallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .shortlist-photo-container {
+            position: relative;
+            margin: 10px;
+        }
+
+        .shortlist-photo {
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .shortlist-photo:hover {
+            transform: scale(1.1);
+        }
+
+        .count-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        #goToSwipingScreen {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Shortlisted Images</h1>
+    <h1>Your Favorites</h1>
+
+    <button id="goToSwipingScreen" onclick="redirectToSwipingScreen()">Go to Swiping Screen</button>
 
     <div id="shortlistGallery"></div>
+
+    <script defer src="js/shortlist.js"></script>
+    <script>
+        function redirectToSwipingScreen() {
+            window.location.href = "swipingScreen.html";
+        }
+    </script>
 </body>
 </html>

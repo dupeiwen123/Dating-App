@@ -2,18 +2,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const shortlistGallery = document.getElementById("shortlistGallery");
 
     // Die picCountMap aus load.js verwenden
-    const picsValueMap = new Map(JSON.parse(localStorage["name"]))
+    window.picsValueMap = new Map(JSON.parse(localStorage["name"]));
 
-    console.log(picsValueMap)
+    console.log(window.picsValueMap);
 
-    // test ob defined ist
-    if (!picsValueMap) {
+    // Test, ob defined ist
+    if (!window.picsValueMap) {
         console.error('picCountMap is not defined. Make sure it is set in load.js.');
         return;
     }
 
     // Umwandlung der Map in ein Array von Schlüssel-Wert-Paaren
-    const picCountArray = Array.from(picsValueMap.entries());
+    const picCountArray = Array.from(window.picsValueMap.entries());
 
     // Sortieren des Arrays absteigend nach den Werten (Count)
     picCountArray.sort((a, b) => b[1] - a[1]);
@@ -27,18 +27,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function displayTopImages(images) {
     images.forEach(imageName => {
+        const photoContainer = document.createElement("div");
         const imageElement = document.createElement("img");
+        const countOverlay = document.createElement("div");
+
+        photoContainer.classList.add("shortlist-photo-container");
         imageElement.src = `photos/all/${imageName}`;
         imageElement.alt = "Shortlisted Photo";
-        imageElement.classList.add("shortlist-photo"); // Klasse für die definierte Größe in styles.css
+        imageElement.classList.add("shortlist-photo");
+
+        countOverlay.classList.add("count-overlay");
+        countOverlay.textContent = `Count: ${window.picsValueMap.get(imageName)}`;
 
         imageElement.addEventListener("click", () => {
             displayLargePhoto(`photos/all/${imageName}`);
         });
 
-        shortlistGallery.appendChild(imageElement);
+        photoContainer.appendChild(imageElement);
+        photoContainer.appendChild(countOverlay);
+
+        shortlistGallery.appendChild(photoContainer);
     });
 }
+
 
 function displayLargePhoto(photoUrl) {
     const largePhoto = document.getElementById("largePhoto");
