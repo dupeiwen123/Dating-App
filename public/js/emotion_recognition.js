@@ -113,11 +113,11 @@ async function setupCamera() {
 
 async function setupFaceAPI() {
     await faceapi.nets.ssdMobilenetv1.load('./models');
-    //await faceapi.nets.tinyFaceDetector.load('./models');
+    
     await faceapi.nets.faceRecognitionNet.load('./models');
     await faceapi.nets.faceExpressionNet.load('./models');
     optionsSSDMobileNet = new faceapi.SsdMobilenetv1Options({ minConfidence: minScore, maxResults });
-    // check tf engine state
+ 
     console.log(`Models loaded: ${str(faceapi.tf.engine().state.numTensors)} tensors`);
   }
 
