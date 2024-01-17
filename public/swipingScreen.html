@@ -7,9 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Card Swiper</title>
   <link rel="stylesheet" href="css/swipingStyles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+  <script src="./js/emotion_recognition.js"></script>
 </head>
 
 <body>
+
+  <video id="video" playsinline class="video" width="320" height="240"></video>
+  <canvas id="canvas" class="canvas" style="position: fixed; top: 0; left: 0; z-index: 10"></canvas>
   <ion-icon id="dislike" name="heart-dislike"></ion-icon>
   <div id="swiper">
     <!-- <div class="card" style="--i:0">

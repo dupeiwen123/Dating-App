@@ -17,7 +17,7 @@ function drawFaces(canvas, data, fps) {
     ctx.clearRect(0,0, canvas.width, canvas.height);
     ctx.font = 'small-caps 20px "Segoi UI"';
     ctx.fillStyle = 'white';
-    ctx.fillText(`FPS: ${fps}`, 10, 25)
+    //ctx.fillText(`FPS: ${fps}`, 10, 25)
 
     for (const person of data) {
         ctx.fillStyle = 'deepskyblue';
@@ -31,7 +31,13 @@ function drawFaces(canvas, data, fps) {
         ctx.fillText(`expression: ${Math.round(100 * expression[0][1])}% ${expression[0][0]}`, person.detection.box.x, person.detection.box.y - 41);
         
     }
-    
+}
+
+function logExpressions(data) {
+    for (const person of data) {
+        const expression = Object.entries(person.expressions).sort((a, b) => b[1] - a[1]);
+        console.log(`Expression for person: ${expression[0][0]} - ${Math.round(100 * expression[0][1])}%`);
+    }
 }
 
 async function detectVideo(video, canvas) {
@@ -42,7 +48,8 @@ async function detectVideo(video, canvas) {
         .withFaceExpressions()
         .then((result) => {
             const fps = 1000 / performance.now() -t0;
-            drawFaces(canvas, result, fps.toLocaleString());
+            //drawFaces(canvas, result, fps.toLocaleString());
+            logExpressions(result);
             requestAnimationFrame(() => detectVideo(video, canvas));
             return true;
         })
@@ -89,7 +96,7 @@ async function setupCamera() {
     if (settings.aspectRatio) settings.aspectRatio = Math.trunc(100 * settings.aspectRatio) / 100;
     console.log(`Camera active: ${track.label}`);
     console.log(`Camera settings: ${str(settings)}`);
-    canvas.addEventListener('click', () => {
+    /**canvas.addEventListener('click', () => {
         if (video && video.readyState >= 2) {
         if (video.paused) {
             video.play();
@@ -100,6 +107,7 @@ async function setupCamera() {
         }
         console.log(`Camera state: ${video.paused ? 'paused' : 'playing'}`);
     });
+    **/
     return new Promise((resolve) => {
         video.onloadeddata = async () => {
         canvas.width = video.videoWidth;
