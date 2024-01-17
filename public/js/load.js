@@ -44,13 +44,6 @@ function simulateEyeTrackingResults(duration) {
     return eyeTrackingResults;
 }
 
-// Displays eye tracking results in the frontend
-/* function displayResults(eyeTrackingResults) {
-} */
-
-// Initialize to show all photos
-// fetchPhotos('all');
-
 // Fetches photos based on gender
 function fetchPhotos(gender) {
     // Get the list of images in the photos folder
