@@ -18,8 +18,10 @@
 
         #shortlistGallery {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-wrap: nowrap; /* Änderung hier: keine Umbrüche */
+            overflow-x: auto; /* Änderung hier: horizontales Scrollen hinzugefügt */
         }
 
         .shortlist-photo-container {
@@ -60,7 +62,6 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
     </style>
 </head>
 <body>

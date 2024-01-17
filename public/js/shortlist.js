@@ -19,13 +19,20 @@ document.addEventListener("DOMContentLoaded", function () {
     picCountArray.sort((a, b) => b[1] - a[1]);
 
     // Die 3 Bilder mit den höchsten currentCount-Werten erhalten
-    const topThreeImages = picCountArray.slice(0, 3).map(entry => entry[0]);
+    const topThreeImages = picCountArray.slice(0, 3).map(entry => entry[0]); // Verwende die globale Variable
+
     console.log(topThreeImages);
+    localStorage["topThree"] = topThreeImages;
 
     displayTopImages(topThreeImages);
 });
 
 function displayTopImages(images) {
+    const gallery = document.getElementById("shortlistGallery");
+
+    // Sortieren des Arrays absteigend nach den Werten (Count)
+    images.sort((a, b) => window.picsValueMap.get(b) - window.picsValueMap.get(a));
+
     images.forEach(imageName => {
         const photoContainer = document.createElement("div");
         const imageElement = document.createElement("img");
@@ -46,10 +53,9 @@ function displayTopImages(images) {
         photoContainer.appendChild(imageElement);
         photoContainer.appendChild(countOverlay);
 
-        shortlistGallery.appendChild(photoContainer);
+        gallery.appendChild(photoContainer);
     });
 }
-
 
 function displayLargePhoto(photoUrl) {
     const largePhoto = document.getElementById("largePhoto");
