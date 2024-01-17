@@ -60,6 +60,7 @@ body {
   animation-fill-mode: both;
   /* don't run animation at the beginning */
   animation-play-state: paused;
+  cursor: pointer;
 }
 
 #like.trigger,
