@@ -27,15 +27,20 @@ class Card {
       const card = document.createElement('div');
       card.classList.add('card');
       const img = document.createElement('img');
-      img.src = this.imageUrl;
+      
+      // Pfade richtig zusammensetzen
+      img.src = `photos/all/${this.imageUrl}`;
+      
       card.append(img);
       this.element = card;
+      
       if (this.#isTouchDevice()) {
         this.#listenToTouchEvents();
       } else {
         this.#listenToMouseEvents();
       }
     }
+    
   
     #listenToTouchEvents = () => {
       this.element.addEventListener('touchstart', (e) => {

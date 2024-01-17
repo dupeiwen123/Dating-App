@@ -19,13 +19,45 @@ document.addEventListener("DOMContentLoaded", function () {
     picCountArray.sort((a, b) => b[1] - a[1]);
 
     // Die 3 Bilder mit den höchsten currentCount-Werten erhalten
-    const topThreeImages = picCountArray.slice(0, 3).map(entry => entry[0]);
+    let topThreeImages = picCountArray.slice(0, 3).map(entry => entry[0]); // Verwenden der global Variable
+
+    // null rausfiltern falls da
+    topThreeImages = topThreeImages.filter(imageName => imageName !== null);
+
     console.log(topThreeImages);
 
+    // Wenn weniger als 3 Bilder vorhanden sind, fülle mit weiteren Bildern auf
+    while (topThreeImages.length < 3) {
+        const remainingImages = Array.from(window.picsValueMap.keys()).filter(image => !topThreeImages.includes(image) && image !== null);
+        if (remainingImages.length > 0) {
+            // Füge das nächste Bild mit dem höchsten Count-Wert hinzu
+            const nextImage = remainingImages.reduce((a, b) => window.picsValueMap.get(a) > window.picsValueMap.get(b) ? a : b);
+            topThreeImages.push(nextImage);
+        } else {
+            // Keine weiteren Bilder verfügbar
+            break;
+        }
+    }
+
+    // Aktualisiere window.topThreeImages
+    window.topThreeImages = topThreeImages;
+
+    // Setze localStorage["topThree"] auf topThreeImages
+    localStorage["topThree"] = JSON.stringify(topThreeImages);
+
     displayTopImages(topThreeImages);
+    console.log(topThreeImages);
 });
 
 function displayTopImages(images) {
+    const gallery = document.getElementById("shortlistGallery");
+
+    // Filtere null aus der Liste der Bilder
+    images = images.filter(imageName => imageName !== null);
+
+    // Sortieren des Arrays absteigend nach den Werten (Count)
+    images.sort((a, b) => window.picsValueMap.get(b) - window.picsValueMap.get(a));
+
     images.forEach(imageName => {
         const photoContainer = document.createElement("div");
         const imageElement = document.createElement("img");
@@ -46,10 +78,9 @@ function displayTopImages(images) {
         photoContainer.appendChild(imageElement);
         photoContainer.appendChild(countOverlay);
 
-        shortlistGallery.appendChild(photoContainer);
+        gallery.appendChild(photoContainer);
     });
 }
-
 
 function displayLargePhoto(photoUrl) {
     const largePhoto = document.getElementById("largePhoto");

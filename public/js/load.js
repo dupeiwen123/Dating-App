@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 });
 
-
 const startButton = document.getElementById("startButton");
 const resultScreen = document.getElementById("resultScreen");
 const longestGazedPhoto = document.getElementById("longestGazedPhoto");
