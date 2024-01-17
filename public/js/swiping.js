@@ -22,10 +22,12 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       onLike: () => {
         like.style.animationPlayState = 'running';
         like.classList.toggle('trigger');
+        handleLike();
       },
       onDislike: () => {
         dislike.style.animationPlayState = 'running';
         dislike.classList.toggle('trigger');
+        handleDislike();
       }
     });
 
@@ -35,6 +37,9 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
   function appendNewCard() {
     if (!imageUrls || imageUrls.length === 0) {
       console.error('No shortlist images available.');
+      // Entferne die Event-Listener für Like und Dislike
+      likeButton.removeEventListener('click', handleLike);
+      dislikeButton.removeEventListener('click', handleDislike);
       return;
     }
 
@@ -85,6 +90,10 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       setTimeout(() => {
         currentCard.style.opacity = '0'; // Setze die Opazität auf 0 für den Verschwinden-Effekt
       }, 50);
+    } else {
+      // Entferne die Event-Listener für Like und Dislike, da keine Bilder mehr vorhanden sind
+      likeButton.removeEventListener('click', handleLike);
+      dislikeButton.removeEventListener('click', handleDislike);
     }
   }
 
