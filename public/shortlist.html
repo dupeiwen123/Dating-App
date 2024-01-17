@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Favorites</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <script src="./js/emotion_recognition.js"></script>
+</head>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -68,6 +71,10 @@
     <h1>Your Favorites</h1>
 
     <button id="goToSwipingScreen" onclick="redirectToSwipingScreen()">Go to Swiping Screen</button>
+    <video id="video" playsinline class="video" width="320" height="240"></video>
+    <canvas id="canvas" class="canvas" style="position: fixed; top: 0; left: 0; z-index: 10"></canvas>
+    <div id="log" style="overflow-y: scroll; height: 16.5rem"></div>
+    
 
     <div id="shortlistGallery"></div>
 
