@@ -1,0 +1,126 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #ffeded, #f8f8f8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  header {
+    text-align: center;
+    padding: 20px;
+    color: #333; /* Dark gray text color */
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    font-family: 'Cursive', sans-serif; /* Custom font for the header */
+  }
+
+  #infoCarousel {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    /* Soft box shadow for the carousel */
+  }
+
+  .carousel-item {
+    text-align: left;
+    padding: 20px;
+  }
+
+  .carousel-title {
+    font-size: 2em;
+    color: #ff6b6b;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .carousel-content {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    background-color: transparent;
+    border: none;
+    width: 50px;
+    height: 100%;
+    top: 0;
+    transform: translateY(0%);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .carousel-control-prev:hover,
+  .carousel-control-next:hover {
+    opacity: 1;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    color: #ff6b6b;
+    font-size: 2em;
+  }
+
+  .carousel-control-prev {
+    left: -50px;
+  }
+
+  .carousel-control-next {
+    right: -50px;
+  }
+
+  .carousel-control-prev:not(:disabled),
+  .carousel-control-next:not(:disabled) {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .carousel-control-prev[aria-disabled="true"],
+  .carousel-control-next[aria-disabled="true"] {
+    display: none;
+  }
+
+  /* Calibration button */
+  .calibration-button {
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 24px;
+    font-size: 1.2em;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 0px 10px rgba(255, 107, 107, 0.3);
+  }
+
+  .calibration-button:hover {
+    background-color: #ff8c8c;
+    transform: scale(1.1);
+    box-shadow: 0px 0px 20px rgba(255, 107, 107, 0.5);
+  }
+
+  /* Arrows evtl noch schöner machen */
+  /* .carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: #ff6b6b;
+  } */
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: #ff6b6b;
+    /* Arrow background color */
+    border-radius: 50%;
+    /* Make the arrows circular */
+    color: #ff6b6b;
+    font-size: 1.5em;
+    padding: 10px;
+  }
+
+  .carousel-control-prev:hover .carousel-control-prev-icon,
+  .carousel-control-next:hover .carousel-control-next-icon {
+    background-color: #ff8c8c;
+  }

@@ -1,0 +1,74 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    background: linear-gradient(to bottom, #ffeded, #f8f8f8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffeded;
+  color: #ff6b6b; /* Dark gray text color */
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  z-index: 0;
+  font-family: 'Cursive', sans-serif; /* Custom font for the header */
+}
+
+
+#shortlistGallery {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    /* Änderung hier: keine Umbrüche */
+    overflow-x: auto;
+    /* Änderung hier: horizontales Scrollen hinzugefügt */
+}
+
+.shortlist-photo-container {
+    position: relative;
+    margin: 10px;
+}
+
+.shortlist-photo {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.shortlist-photo:hover {
+    transform: scale(1.1);
+}
+
+.count-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 3px;
+}
+
+#goToSwipingScreen {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
