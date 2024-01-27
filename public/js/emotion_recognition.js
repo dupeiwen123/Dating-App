@@ -11,28 +11,6 @@ function str(json) {
     return text;
 }
 
-function drawFaces(canvas, data, fps) {
-    const ctx = canvas.getContext('2d', { willReadFrequently: true});
-    if (!ctx) return;
-    ctx.clearRect(0,0, canvas.width, canvas.height);
-    ctx.font = 'small-caps 20px "Segoi UI"';
-    ctx.fillStyle = 'white';
-    //ctx.fillText(`FPS: ${fps}`, 10, 25)
-
-    for (const person of data) {
-        ctx.fillStyle = 'deepskyblue';
-        ctx.globalAlpha = 0.6;
-        ctx.beginPath();
-        ctx.rect(person.detection.box.x, person.detection.box.y, person.detection.box.width, person.detection.box.height);
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-        const expression = Object.entries(person.expressions).sort((a, b) => b[1] - a[1]);
-        ctx.fillStyle = 'black';
-        ctx.fillText(`expression: ${Math.round(100 * expression[0][1])}% ${expression[0][0]}`, person.detection.box.x, person.detection.box.y - 41);
-        
-    }
-}
-
 function logExpressions(data) {
     for (const person of data) {
         const expression = Object.entries(person.expressions).sort((a, b) => b[1] - a[1]);
@@ -121,8 +99,6 @@ async function setupCamera() {
 
 async function setupFaceAPI() {
     await faceapi.nets.ssdMobilenetv1.load('./models');
-    
-    await faceapi.nets.faceRecognitionNet.load('./models');
     await faceapi.nets.faceExpressionNet.load('./models');
     optionsSSDMobileNet = new faceapi.SsdMobilenetv1Options({ minConfidence: minScore, maxResults });
  
