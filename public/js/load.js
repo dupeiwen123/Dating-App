@@ -1,12 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
     const gallery = document.getElementById("gallery");
-    const largePhotoContainer = document.getElementById("largePhotoContainer");
-    const largePhoto = document.getElementById("largePhoto");
     const allButton = document.getElementById("allButton");
     const menButton = document.getElementById("menButton");
     const womenButton = document.getElementById("womenButton");
     const shortlistButton = document.getElementById("shortlistButton");
     let currentImageNamesOfCells = [];
+    let shownPhotos = new Set();
 
     // Event listeners for gender buttons
     allButton.addEventListener("click", () => fetchPhotos('all'));
@@ -42,42 +41,46 @@ document.addEventListener("DOMContentLoaded", function () {
                 const columnCount = 3; // Number of columns
                 const photosPerColumn = Math.ceil(photosToShow / columnCount);
 
-                for (let i = 0; i < columnCount; i++) {
-                    const column = document.createElement("div");
-                    column.classList.add("photo-column");
-                    photosContainer.appendChild(column);
-
-                    for (let j = i * photosPerColumn; j < (i + 1) * photosPerColumn && j < photosToShow; j++) {
-                        const photoUrl = allPhotos[j];
-                        const photoElement = document.createElement("img");
-                        photoElement.src = `photos/${gender}/${photoUrl}`;
-                        photoElement.alt = `Photo ${j + 1}`;
-                        photoElement.classList.add("photo");
-
-                        currentImageNamesOfCells[j] = photoUrl;
-
-                        photoElement.addEventListener("click", () => {
-                            displayLargePhoto(`photos/${gender}/${photoUrl}`);
-                        });
-
-                        column.appendChild(photoElement);
+                let remainingPhotos = allPhotos.filter(photo => !shownPhotos.has(photo));
+                console.log(remainingPhotos.length)
+                if(remainingPhotos.length < photosToShow){
+                    console.log("No photos available for shuffling.");
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'No photos available',
+                        text: 'There are not enough photos for shuffling.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+                else{
+                    for (let i = 0; i < columnCount; i++) {
+                        const column = document.createElement("div");
+                        column.classList.add("photo-column");
+                        photosContainer.appendChild(column);
+    
+                        for (let j = i * photosPerColumn; j < (i + 1) * photosPerColumn && j < photosToShow; j++) {
+                            const photoUrl = remainingPhotos[j];
+      
+                                const photoElement = document.createElement("img");
+                                photoElement.src = `photos/${gender}/${photoUrl}`;
+                                photoElement.alt = `Photo ${j + 1}`;
+                                photoElement.classList.add("photo");
+        
+                                currentImageNamesOfCells[j] = photoUrl;
+                                shownPhotos.add(photoUrl); // Mark photo as shown
+                                column.appendChild(photoElement);
+                                                     
+                        }
                     }
                 }
+                
+
 
                 gallery.appendChild(photosContainer);
             })
             .catch(error => {
                 console.error(`Error fetching ${gender} photo list:`, error.message);
             });
-    }
-
-    // Fetch photos for the current gender
-    function fetchPhotosForCurrentGender() {
-        const activeButton = document.querySelector(".gender-button.active");
-        if (activeButton) {
-            const gender = activeButton.dataset.gender;
-            fetchPhotos(gender);
-        }
     }
 
     // Removes existing photos
@@ -103,25 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchPhotos(gender); // Fotos basierend auf Geschlecht
     }
 
-    function closeLargePhoto() {
-        document.getElementById("largePhotoContainer").style.display = "none";
-    }
-
-    // Funktion zum Shuffeln der Fotos
-    function shufflePhotos() {
-        // Überprüfe, ob es Fotos gibt, die geshuffelt werden können
-        if (currentImageNamesOfCells.length === 0) {
-            console.error('No photos available for shuffling.');
-            return;
-        }
-    
-        // Shuffel die Bildernamen
-        shuffleArray(currentImageNamesOfCells);
-    
-        // Lade neue Fotos
-        fetchPhotosForCurrentGender();
-    }
-
     // Funktion zum Shuffeln eines Arrays (Fisher-Yates Algorithmus)
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -144,9 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const TOP_SIDE = window.innerHeight / 3;
     const BOTTOM_SIDE = window.innerHeight - TOP_SIDE;
-
-    let horizontal_look_direction = null;
-    let vertical_look_direction = null;
 
     // Initialisieren der Map für die Zählung der Aufrufe
     const picCountMap = new Map(); // leer zu beginn
@@ -193,6 +174,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // damit man von shortlist.js darauf zugreifen kann
         localStorage["name"] = JSON.stringify(Array.from(picCountMap.entries()));
 
-        console.log(`${currentPic} - Count: ${picCountMap.get(currentPic)}`);
+        // console.log(`${currentPic} - Count: ${picCountMap.get(currentPic)}`);
     }).begin();
 });
