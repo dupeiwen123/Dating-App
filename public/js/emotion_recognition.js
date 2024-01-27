@@ -1,13 +1,11 @@
 
-var faceapi = window.faceapi;
+//let faceapi = window.faceapi;
 
 const minScore = 0.2;
 const maxResults = 5;
 
 function str(json) {
-    //let text = '<font color="lightblue">';
     text = json ? JSON.stringify(json).replace(/{|}|"|\[|\]/g, '').replace(/,/g, ', ') : '';
-    //text += '</font>';
     return text;
 }
 
@@ -26,7 +24,6 @@ async function detectVideo(video, canvas) {
         .withFaceExpressions()
         .then((result) => {
             const fps = 1000 / performance.now() -t0;
-            //drawFaces(canvas, result, fps.toLocaleString());
             logExpressions(result);
             requestAnimationFrame(() => detectVideo(video, canvas));
             return true;
@@ -74,18 +71,7 @@ async function setupCamera() {
     if (settings.aspectRatio) settings.aspectRatio = Math.trunc(100 * settings.aspectRatio) / 100;
     console.log(`Camera active: ${track.label}`);
     console.log(`Camera settings: ${str(settings)}`);
-    /**canvas.addEventListener('click', () => {
-        if (video && video.readyState >= 2) {
-        if (video.paused) {
-            video.play();
-            detectVideo(video, canvas);
-        } else {
-            video.pause();
-        }
-        }
-        console.log(`Camera state: ${video.paused ? 'paused' : 'playing'}`);
-    });
-    **/
+    
     return new Promise((resolve) => {
         video.onloadeddata = async () => {
         canvas.width = video.videoWidth;
