@@ -69,8 +69,6 @@ async function setupCamera() {
     
     return new Promise((resolve) => {
         video.onloadeddata = async () => {
-        //canvas.width = video.videoWidth;
-        //canvas.height = video.videoHeight;
         video.play();
         detectVideo(video, canvas);
         resolve(true);
