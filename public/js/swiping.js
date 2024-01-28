@@ -22,12 +22,12 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       onLike: () => {
         like.style.animationPlayState = 'running';
         like.classList.toggle('trigger');
-        handleLike();
+        handleLike(expressions);
       },
       onDislike: () => {
         dislike.style.animationPlayState = 'running';
         dislike.classList.toggle('trigger');
-        handleDislike();
+        handleDislike(expressions);
       }
     });
 
@@ -56,25 +56,27 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
   }
 
   // Like- und Dislike-Arrays für die gespeicherten Bilder
-  const likedImages = [];
-  const dislikedImages = [];
+  const likedImages = new Map();
+  const dislikedImages = new Map();
 
-  function handleLike() {
+  function handleLike(expressions) {
     const likedImageUrl = imageUrls[cardCount % imageUrls.length];
     // Hier LIKED PICS speichern zb
-    likedImages.push(likedImageUrl);
+    likedImages.set(likedImageUrl, expressionsHistory);
 
     console.log('Liked:', likedImageUrl);
     removeCurrentCard();
+    expressionsHistory = [];
   }
 
-  function handleDislike() {
+  function handleDislike(expressions) {
     const dislikedImageUrl = imageUrls[cardCount % imageUrls.length];
     // Hier DISLIKED PICS speichern zb
-    dislikedImages.push(dislikedImageUrl);
+    dislikedImages.set(dislikedImageUrl, expressionsHistory);
 
     console.log('Disliked:', dislikedImageUrl);
     removeCurrentCard();
+    expressionsHistory = [];
   }
 
   function removeCurrentCard() {
@@ -94,6 +96,9 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       // Entferne die Event-Listener für Like und Dislike, da keine Bilder mehr vorhanden sind
       likeButton.removeEventListener('click', handleLike);
       dislikeButton.removeEventListener('click', handleDislike);
+      stopDetection();
+      console.log(dislikedImages);
+      console.log(likedImages);
     }
   }
 

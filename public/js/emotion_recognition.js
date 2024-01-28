@@ -1,5 +1,6 @@
 const minScore = 0.2;
 const maxResults = 5;
+let expressionsHistory = [];
 
 function str(json) {
     text = json ? JSON.stringify(json).replace(/{|}|"|\[|\]/g, '').replace(/,/g, ', ') : '';
@@ -9,25 +10,29 @@ function str(json) {
 function logExpressions(data) {
     for (const person of data) {
         const expression = Object.entries(person.expressions).sort((a, b) => b[1] - a[1]);
-        // console.log(`Expression for person: ${expression[0][0]} - ${Math.round(100 * expression[0][1])}%`);
+        console.log(`Expression for person: ${expression[0][0]} - ${Math.round(100 * expression[0][1])}%`);
+        expressionsHistory.push(expression)
     }
 }
 
 async function detectVideo(video, canvas) {
     if (!video || video.paused) return false;
-    faceapi
-        .detectAllFaces(video, optionsSSDMobileNet)
-        .withFaceExpressions()
-        .then((result) => {
-            logExpressions(result);
-            requestAnimationFrame(() => detectVideo(video, canvas));
-            return true;
-        })
-        .catch((err) => {
-            console.log(`Detect Error:`, err);
-            return false;
-        });
-        return false;
+    detectionIntervalId = setInterval(() => {
+        faceapi
+            .detectAllFaces(video, optionsSSDMobileNet)
+            .withFaceExpressions()
+            .then((result) => {
+                logExpressions(result);
+            })
+            .catch((err) => {
+                console.log(`Detect Error:`, err);
+            });
+    }, 100); // Adjust interval as needed
+    return true;
+}
+
+function stopDetection() {
+    clearInterval(detectionIntervalId)
 }
 
 async function setupCamera() {
