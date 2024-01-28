@@ -10,7 +10,6 @@ function str(json) {
 function logExpressions(data) {
     for (const person of data) {
         const expression = Object.entries(person.expressions).sort((a, b) => b[1] - a[1]);
-        console.log(`Expression for person: ${expression[0][0]} - ${Math.round(100 * expression[0][1])}%`);
         expressionsHistory.push(expression)
     }
 }
@@ -27,7 +26,7 @@ async function detectVideo(video, canvas) {
             .catch((err) => {
                 console.log(`Detect Error:`, err);
             });
-    }, 100); // Adjust interval as needed
+    }, 100); 
     return true;
 }
 
