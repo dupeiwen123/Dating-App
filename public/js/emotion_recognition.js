@@ -1,6 +1,3 @@
-
-//let faceapi = window.faceapi;
-
 const minScore = 0.2;
 const maxResults = 5;
 
@@ -18,12 +15,10 @@ function logExpressions(data) {
 
 async function detectVideo(video, canvas) {
     if (!video || video.paused) return false;
-    const t0 = performance.now();
     faceapi
         .detectAllFaces(video, optionsSSDMobileNet)
         .withFaceExpressions()
         .then((result) => {
-            const fps = 1000 / performance.now() -t0;
             logExpressions(result);
             requestAnimationFrame(() => detectVideo(video, canvas));
             return true;
@@ -74,8 +69,8 @@ async function setupCamera() {
     
     return new Promise((resolve) => {
         video.onloadeddata = async () => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        //canvas.width = video.videoWidth;
+        //canvas.height = video.videoHeight;
         video.play();
         detectVideo(video, canvas);
         resolve(true);
