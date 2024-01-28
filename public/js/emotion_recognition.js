@@ -9,7 +9,7 @@ function str(json) {
 function logExpressions(data) {
     for (const person of data) {
         const expression = Object.entries(person.expressions).sort((a, b) => b[1] - a[1]);
-        console.log(`Expression for person: ${expression[0][0]} - ${Math.round(100 * expression[0][1])}%`);
+        // console.log(`Expression for person: ${expression[0][0]} - ${Math.round(100 * expression[0][1])}%`);
     }
 }
 

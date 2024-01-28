@@ -63,16 +63,19 @@ function calcAccuracy() {
                 var accuracyLabel = "<a>Accuracy | "+precision_measurement+"%</a>";
                 document.getElementById("Accuracy").innerHTML = accuracyLabel; // Show the accuracy in the nav bar.
                 swal({
-                    title: "Your accuracy measure is " + precision_measurement + "%",
+                    title: "Calibration Completed! Your accuracy measure is " + precision_measurement + "%",
+                    text: "Do you want to go to the gallery?",
+                    icon: "success",
                     allowOutsideClick: false,
-                    buttons: {
-                        cancel: "Recalibrate",
-                        confirm: true,
-                    }
+                    buttons: ["No, recalibrate", "Yes, go to gallery"],
+                    // buttons: {
+                    //     cancel: "Recalibrate",
+                    //     confirm: true,
+                    // }
                 }).then(isConfirm => {
                         if (isConfirm){
                             //clear the calibration & hide the last middle button
-                            ClearCanvas();
+                            redirectToGallery();
                         } else {
                             //use restart function to restart the calibration
                             document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
