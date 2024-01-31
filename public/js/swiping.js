@@ -65,7 +65,7 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
     const currentCard = swiper.querySelector('.card:not(.dismissing)');
     if (currentCard) {
       const imageUrl = currentCard.getAttribute('data-image-url');
-      likedImages.set(imageUrl, expressions);
+      likedImages.set(imageUrl, expressionsHistory);
       console.log('Liked:', imageUrl);
       console.log('Liked Images:', likedImages); // Neuer Eintrag
       removeCurrentCard();
@@ -77,7 +77,7 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
     const currentCard = swiper.querySelector('.card:not(.dismissing)');
     if (currentCard) {
       const imageUrl = currentCard.getAttribute('data-image-url');
-      dislikedImages.set(imageUrl, expressions);
+      dislikedImages.set(imageUrl, expressionsHistory);
       console.log('Disliked:', imageUrl);
       console.log('Disliked Images:', dislikedImages); // Neuer Eintrag
       removeCurrentCard();
