@@ -30,7 +30,9 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
         handleDislike(expressions);
       }
     });
-
+  
+    card.element.setAttribute('data-image-url', imageUrl); // Setze das imageUrl Attribut auf das card-Element
+  
     return card.element;
   }
 
@@ -60,38 +62,45 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
   const dislikedImages = new Map();
 
   function handleLike(expressions) {
-    const likedImageUrl = imageUrls[cardCount % imageUrls.length];
-    // Hier LIKED PICS speichern zb
-    likedImages.set(likedImageUrl, expressionsHistory);
-
-    console.log('Liked:', likedImageUrl);
-    removeCurrentCard();
-    expressionsHistory = [];
+    const currentCard = swiper.querySelector('.card:not(.dismissing)');
+    if (currentCard) {
+      const imageUrl = currentCard.getAttribute('data-image-url');
+      likedImages.set(imageUrl, expressions);
+      console.log('Liked:', imageUrl);
+      removeCurrentCard();
+      expressionsHistory = [];
+    }
   }
 
   function handleDislike(expressions) {
-    const dislikedImageUrl = imageUrls[cardCount % imageUrls.length];
-    // Hier DISLIKED PICS speichern zb
-    dislikedImages.set(dislikedImageUrl, expressionsHistory);
-
-    console.log('Disliked:', dislikedImageUrl);
-    removeCurrentCard();
-    expressionsHistory = [];
+    const currentCard = swiper.querySelector('.card:not(.dismissing)');
+    if (currentCard) {
+      const imageUrl = currentCard.getAttribute('data-image-url');
+      dislikedImages.set(imageUrl, expressions);
+      console.log('Disliked:', imageUrl);
+      removeCurrentCard();
+      expressionsHistory = [];
+    }
   }
 
   function removeCurrentCard() {
     const cards = swiper.querySelectorAll('.card:not(.dismissing)');
-    const currentCard = cards[0]; // Annahme: Das vorderste sichtbare Bild ist das aktuelle Bild
-
+    const currentCard = cards[0];
+  
     if (currentCard) {
+      const imageUrl = currentCard.getAttribute('data-image-url');
       currentCard.classList.add('dismissing');
       currentCard.addEventListener('transitionend', () => {
         currentCard.remove();
-        appendNewCard(); // Nachdem das Bild entfernt wurde, füge das nächste Bild hinzu
+        appendNewCard();
       }, { once: true });
       setTimeout(() => {
-        currentCard.style.opacity = '0'; // Setze die Opazität auf 0 für den Verschwinden-Effekt
+        currentCard.style.opacity = '0';
       }, 50);
+  
+      console.log('Removing card with imageUrl:', imageUrl);
+  
+      expressionsHistory = [];
     } else {
       // Entferne die Event-Listener für Like und Dislike, da keine Bilder mehr vorhanden sind
       likeButton.removeEventListener('click', handleLike);
