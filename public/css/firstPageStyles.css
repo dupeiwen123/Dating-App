@@ -10,9 +10,9 @@ body {
     height: 100vh;
   }
   header {
+    color: #ff6b6b;
     text-align: center;
     padding: 20px;
-    color: #333; /* Dark gray text color */
     width: 100%;
     box-sizing: border-box;
     position: fixed;

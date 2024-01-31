@@ -7,32 +7,52 @@
     <title>Your Favorites</title>
     <link rel="stylesheet" type="text/css" href="./css/shortlistStyles.css">
     <!--
-<script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
-<script src="./js/emotion_recognition.js"></script>
--->
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <script src="./js/emotion_recognition.js"></script>
+    -->
 
-</head>
-<style>
-    
-</style>
+    <style>
+        header {
+            text-align: center;
+            margin-top: 5rem;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        #startSwiping {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ff6b6b;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 24px;
+            font-size: 1.2em;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0px 0px 10px rgba(255, 107, 107, 0.3);
+            margin-top: 1rem;
+        }
+    </style>
 </head>
 
 <body>
-
-    
-    <header class="text-center mt-5">
+    <header>
         <h1 class="display-3">Your Favorites</h1>
-        <!-- <p class="lead">Your journey to an innovative dating experience</p> -->
-      </header>
-    <button id="goToSwipingScreen" onclick="redirectToSwipingScreen()">Go to Swiping Screen</button>
+        <p class="lead">Our eye-tracking analysis has revealed that you found the following images most interesting. Click "Start Swiping" to proceed to the swiping page.</p>
+    </header>
+
+    <p></p>
+    <div id="shortlistGallery"></div>
+    <button id="startSwiping" onclick="redirectToSwipingScreen()">Start Swiping</button>
     <!--
     <video id="video" playsinline class="video" width="320" height="240"></video>
     <canvas id="canvas" class="canvas" style="position: fixed; top: 0; left: 0; z-index: 10"></canvas>
     <div id="log" style="overflow-y: scroll; height: 16.5rem"></div>
     -->
-
-
-    <div id="shortlistGallery"></div>
 
     <script defer src="js/shortlist.js"></script>
     <script>
