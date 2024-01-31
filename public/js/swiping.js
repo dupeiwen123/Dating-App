@@ -97,8 +97,8 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       likeButton.removeEventListener('click', handleLike);
       dislikeButton.removeEventListener('click', handleDislike);
       stopDetection();
-      console.log(dislikedImages);
-      console.log(likedImages);
+      console.log("Disliked images: ", dislikedImages);
+      console.log("Liked images: ", likedImages);
     }
   }
 
