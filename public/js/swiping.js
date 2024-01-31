@@ -68,6 +68,7 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       likedImages.set(imageUrl, expressionsHistory);
       console.log('Liked:', imageUrl);
       console.log('Liked Images:', likedImages); // Neuer Eintrag
+      //console.log(expressionsHistory);
       removeCurrentCard();
       expressionsHistory = [];
     }
@@ -86,9 +87,11 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
   }
 
   function removeCurrentCard() {
-    const cards = swiper.querySelectorAll('.card:not(.dismissing)');
+    const cards = swiper.querySelectorAll('.card:not(.dismissing)'); 
+ 
     const currentCard = cards[0];
-  
+    
+    console.log(cardCount);
     if (currentCard) {
       const imageUrl = currentCard.getAttribute('data-image-url');
       currentCard.classList.add('dismissing');
@@ -101,10 +104,12 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       }, 50);
   
       console.log('Removing card with imageUrl:', imageUrl);
-  
+      
       expressionsHistory = [];
-    } else {
+      cardCount--;
+    } if(cardCount == 0) {
       // Entferne die Event-Listener für Like und Dislike, da keine Bilder mehr vorhanden sind
+      console.log("No more cards left.");
       likeButton.removeEventListener('click', handleLike);
       dislikeButton.removeEventListener('click', handleDislike);
       stopDetection();

@@ -31,6 +31,7 @@ async function detectVideo(video, canvas) {
 }
 
 function stopDetection() {
+    console.log("Stopping expression detection.");
     clearInterval(detectionIntervalId)
 }
 
