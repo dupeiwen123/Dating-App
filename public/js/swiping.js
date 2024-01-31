@@ -67,6 +67,7 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       const imageUrl = currentCard.getAttribute('data-image-url');
       likedImages.set(imageUrl, expressions);
       console.log('Liked:', imageUrl);
+      console.log('Liked Images:', likedImages); // Neuer Eintrag
       removeCurrentCard();
       expressionsHistory = [];
     }
@@ -78,6 +79,7 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       const imageUrl = currentCard.getAttribute('data-image-url');
       dislikedImages.set(imageUrl, expressions);
       console.log('Disliked:', imageUrl);
+      console.log('Disliked Images:', dislikedImages); // Neuer Eintrag
       removeCurrentCard();
       expressionsHistory = [];
     }

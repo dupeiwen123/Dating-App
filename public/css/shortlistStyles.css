@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 20px;
     background: linear-gradient(to bottom, #ffeded, #f8f8f8);
     display: flex;
@@ -14,7 +14,7 @@ header {
   text-align: center;
   padding: 20px;
   background-color: #ffeded;
-  color: #ff6b6b; /* Dark gray text color */
+  color: #ff6b6b;
   width: 100%;
   box-sizing: border-box;
   position: fixed;
