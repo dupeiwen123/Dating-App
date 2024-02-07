@@ -107,7 +107,8 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       
       expressionsHistory = [];
       cardCount--;
-    } if(cardCount == 0) {
+    } 
+    if(cardCount == 0) {
       // Entferne die Event-Listener für Like und Dislike, da keine Bilder mehr vorhanden sind
       console.log("No more cards left.");
       likeButton.removeEventListener('click', handleLike);
@@ -115,6 +116,9 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       stopDetection();
       console.log("Disliked images: ", dislikedImages);
       console.log("Liked images: ", likedImages);
+      localStorage.setItem('dislikedImages', JSON.stringify(Array.from(dislikedImages.entries())));
+      localStorage.setItem('likedImages', JSON.stringify(Array.from(likedImages.entries())));
+      window.location.href = 'results.html';
     }
   }
 
