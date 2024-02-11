@@ -1,12 +1,14 @@
 # Dating-App
-Kurs: Affective Computing
+Kurs: **Affective Computing**  
+
 Mitglieder: Peiwen Du, Alexander Richter, Henrike Schuster, Sikuan Yan
+
 
 ## Inhaltsverzeichnis:
 1. [Was ist die Aufgabe des Projekts?](#was-ist-die-aufgabe-des-projekts)
 2. [Welche Technologien werden verwendet?](#welche-technologien-werden-verwendet)
 3. [Wie führe ich das Programm aus?](#wie-fuehre-ich-das-programm-aus)
-4. [Was für Dependencies werden verwendet?](#installation)
+4. [Was für Dependencies werden verwendet?](#dependencies)
 
 ---
 
@@ -34,7 +36,7 @@ Um den Code auszuführen, müssen folgende Schritte durchgeführt werden:
 
 3. **Starten des Servers**: Führen Sie den Befehl `node server.js` aus, um den Server zu starten.
 
-4. **Öffnen der Anwendung**: Öffnen Sie einen Webbrowser und geben Sie `http://localhost:3000` in die Adressleiste ein, um auf die Anwendung zuzugreifen. Stellen Sie sicher, dass Ihr Computer übereine Webcam verfügt und Ihr Browser auf diese zugreifen kann.
+4. **Öffnen der Anwendung**: Öffnen Sie einen Webbrowser und geben Sie `http://localhost:3000` in die Adressleiste ein, um auf die Anwendung zuzugreifen. Stellen Sie sicher, dass Ihr Computer über eine Webcam verfügt und Ihr Browser auf diese zugreifen kann.
 
 5. **Interaktion mit der Anwendung**: Folgen Sie den Anweisungen auf der Anwendungsseite und beginnen Sie das Dating-Erlebnis.
 
