@@ -174,7 +174,6 @@ function ClearCalibration(){
   PointCalibrate = 0;
 }
 
-// sleep function because java doesn't have one, sourced from http://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
 function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
