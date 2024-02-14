@@ -18,16 +18,16 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
   function createCard(imageUrl) {
     const card = new Card({
       imageUrl: imageUrl,
-      onDismiss: appendNewCard,
+      //onDismiss: appendNewCard,
       onLike: () => {
         like.style.animationPlayState = 'running';
         like.classList.toggle('trigger');
-        handleLike(expressions);
+        handleLike();
       },
       onDislike: () => {
         dislike.style.animationPlayState = 'running';
         dislike.classList.toggle('trigger');
-        handleDislike(expressions);
+        handleDislike();
       }
     });
   
@@ -47,10 +47,10 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
 
     const imageUrl = imageUrls[cardCount % imageUrls.length];
     const cardElement = createCard(imageUrl);
-
+    console.log("appending new card");
     swiper.append(cardElement);
     cardCount++;
-
+    
     const cards = swiper.querySelectorAll('.card:not(.dismissing)');
     cards.forEach((card, index) => {
       card.style.setProperty('--i', index);
@@ -60,27 +60,31 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
   // Like- und Dislike-Arrays für die gespeicherten Bilder
   const likedImages = new Map();
   const dislikedImages = new Map();
-
-  function handleLike(expressions) {
+  
+  function handleLike() {
+    
     const currentCard = swiper.querySelector('.card:not(.dismissing)');
+    
+    console.log(currentCard.getAttribute('data-image-url'))
     if (currentCard) {
       const imageUrl = currentCard.getAttribute('data-image-url');
       likedImages.set(imageUrl, expressionsHistory);
       console.log('Liked:', imageUrl);
-      console.log('Liked Images:', likedImages); // Neuer Eintrag
-      //console.log(expressionsHistory);
+      console.log('Liked Images:', likedImages);
       removeCurrentCard();
       expressionsHistory = [];
     }
   }
 
-  function handleDislike(expressions) {
+  function handleDislike() {
+    
     const currentCard = swiper.querySelector('.card:not(.dismissing)');
+    
     if (currentCard) {
       const imageUrl = currentCard.getAttribute('data-image-url');
       dislikedImages.set(imageUrl, expressionsHistory);
       console.log('Disliked:', imageUrl);
-      console.log('Disliked Images:', dislikedImages); // Neuer Eintrag
+      console.log('Disliked Images:', dislikedImages);
       removeCurrentCard();
       expressionsHistory = [];
     }
@@ -88,7 +92,6 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
 
   function removeCurrentCard() {
     const cards = swiper.querySelectorAll('.card:not(.dismissing)'); 
- 
     const currentCard = cards[0];
     
     console.log(cardCount);
@@ -96,13 +99,14 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
       const imageUrl = currentCard.getAttribute('data-image-url');
       currentCard.classList.add('dismissing');
       currentCard.addEventListener('transitionend', () => {
-        currentCard.remove();
-        appendNewCard();
+        //currentCard.remove();
+        //console.log("new card");
+        //appendNewCard();
       }, { once: true });
       setTimeout(() => {
         currentCard.style.opacity = '0';
       }, 50);
-  
+      
       console.log('Removing card with imageUrl:', imageUrl);
       
       expressionsHistory = [];
@@ -131,9 +135,9 @@ if (typeof shortlistImages === "string" && shortlistImages.length > 0) {
 
   // 3 Karten erstellen
   for (let i = 0; i < 3; i++) {
-    appendNewCard();
+    appendNewCard()
   }
-
+  
 } else {
   console.error('Invalid or empty shortlist images string in localStorage.');
 }

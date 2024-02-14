@@ -54,18 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-    
-        // Durchschnittliche Confidence-Werte berechnen
         const averageConfidences = new Map();
         emotionConfidences.forEach((confidences, emotion) => {
             const averageConfidence = confidences.reduce((acc, val) => acc + val, 0) / confidences.length;
             averageConfidences.set(emotion, averageConfidence);
         });
     
-        // Emotionen nach durchschnittlicher Confidence sortieren
         const sortedEmotions = Array.from(averageConfidences.entries()).sort((a, b) => b[1] - a[1]);
     
-        // Liste der Emotionen anzeigen
         sortedEmotions.forEach((emotionData, index) => {
             const emotion = emotionData[0];
             const averageConfidence = emotionData[1];
